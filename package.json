@@ -1,0 +1,26 @@
+{
+  "name": "epto",
+  "version": "1.0.0",
+  "description": "Implementacion simple del algoritmo EpTO en NodeJS",
+  "main": "index.ts",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deivi98/EpTO.git"
+  },
+  "author": "David González",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/deivi98/EpTO/issues"
+  },
+  "homepage": "https://github.com/deivi98/EpTO#readme",
+  "dependencies": {
+    "typescript": "^3.7.2"
+  }
+}
