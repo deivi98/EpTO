@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/deivi98/EpTO#readme",
   "dependencies": {
-    "typescript": "^3.7.2"
+    "@types/node": "^12.12.6",
+    "typescript": "^3.7.2",
+    "zeromq": "^6.0.0-beta.2"
   }
 }
