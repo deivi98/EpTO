@@ -1,6 +1,6 @@
-import Process from './internal/process';
+import Process from '../internal/process';
 
-class Client {
+export default class Client {
 
     private _id: string;
     private _process: Process;
@@ -28,5 +28,3 @@ class Client {
         this._process.close();
     }
 }
-
-export default Client;

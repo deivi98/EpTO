@@ -1,13 +1,17 @@
 import { Router, Dealer } from "zeromq";
 import { EventEmitter } from "events";
+import DisseminationComponent from "./disseminationcomponent";
+import OrderingComponent from "./orderingcomponent";
 
-class Process extends EventEmitter {
+export default class Process extends EventEmitter {
 
     private _id: string;
     private _ip: string;
     private _port: number;
     private _router: Router;
-    private _connections: Dealer[];
+    private _peers: Dealer[];
+    private _disseminationComponent: DisseminationComponent;
+    private _orderingComponent: OrderingComponent;
 
     constructor(id: string, ip: string, port: number) {
         super();
@@ -16,7 +20,9 @@ class Process extends EventEmitter {
         this._port = port;
 
         this._router = new Router();
-        this._connections = [];
+        this._peers = [];
+        this._disseminationComponent = new DisseminationComponent(this);
+        this._orderingComponent = new OrderingComponent(this);
     }
 
     get id(): string {
@@ -58,17 +64,15 @@ class Process extends EventEmitter {
 
         var connectionDealer = new Dealer();
         connectionDealer.connect("tcp://" + ip + ":" + port);
-        this._connections.push(connectionDealer);
+        this._peers.push(connectionDealer);
     }
 
     public close(): void {
 
-        this._connections.forEach((dealer: Dealer) => {
+        this._peers.forEach((dealer: Dealer) => {
             dealer.close();
         });
 
         // this._router.close(); No debería dar error
     }
 }
-
-export default Process;

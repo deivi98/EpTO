@@ -1,4 +1,4 @@
-import Client from './client';
+import Client from './app/client';
 
 var client1 = new Client('client1', '127.0.0.1', 5551);
 var client2 = new Client('client2', '127.0.0.1', 5552);
