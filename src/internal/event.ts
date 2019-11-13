@@ -28,6 +28,10 @@ export default class Event {
         return this._ttl;
     }
 
+    set ttl(ttl: number) {
+        this._ttl = ttl;
+    }
+
     get ts(): number {
         return this._ts;
     }
