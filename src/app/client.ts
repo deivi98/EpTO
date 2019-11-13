@@ -7,7 +7,7 @@ export default class Client {
 
     constructor(id: string, ip: string, port: number) {
         this._id = id;
-        this._process = new Process(id, ip, port);
+        this._process = new Process(ip, port);
     }
     
     get id(): string {

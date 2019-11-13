@@ -5,22 +5,20 @@ import OrderingComponent from "./orderingcomponent";
 
 export default class Process extends EventEmitter {
 
+    private static _idInc = 0;
     private _id: string;
     private _ip: string;
     private _port: number;
     private _router: Router;
-    private _peers: Dealer[];
     private _disseminationComponent: DisseminationComponent;
     private _orderingComponent: OrderingComponent;
 
-    constructor(id: string, ip: string, port: number) {
+    constructor(ip: string, port: number) {
         super();
-        this._id = id;
+        this._id = "p" + Process.newId();
         this._ip = ip;
         this._port = port;
-
         this._router = new Router();
-        this._peers = [];
         this._disseminationComponent = new DisseminationComponent(this);
         this._orderingComponent = new OrderingComponent(this);
     }
@@ -64,15 +62,19 @@ export default class Process extends EventEmitter {
 
         var connectionDealer = new Dealer();
         connectionDealer.connect("tcp://" + ip + ":" + port);
-        this._peers.push(connectionDealer);
+        this._disseminationComponent.peers.push(connectionDealer);
     }
 
     public close(): void {
 
-        this._peers.forEach((dealer: Dealer) => {
+        this._disseminationComponent.peers.forEach((dealer: Dealer) => {
             dealer.close();
         });
 
         // this._router.close(); No debería dar error
+    }
+
+    private static newId(): number {
+        return this._idInc++;
     }
 }
