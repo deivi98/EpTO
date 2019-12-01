@@ -2,6 +2,10 @@ import Client from './app/client';
 import Message from './app/message';
 import Event from './internal/event';
 
+/**
+ * Programa de testeo
+ */
+
 var client1 = new Client('client1', '127.0.0.1', 5551);
 var client2 = new Client('client2', '127.0.0.1', 5552);
 
