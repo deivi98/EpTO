@@ -67,7 +67,7 @@ export default class OrderingComponent {
             this._delivered[event.id] = event;
             this._lastDeliveredTs = event.ts;
             // ENTREGAR EVENTO
-            this._process.emit('message', event.msg);
+            this._process.emit('message', event);
         });
     }
 }

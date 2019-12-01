@@ -9,7 +9,7 @@ export default class DisseminationComponent {
 
     private _process: Process;
     private static K: number = 5;
-    public static TTL: number = 64;
+    public static TTL: number = 3;
     private _nextBall: { [id: string]: Event; };
     private _peers: Dealer[];
 
@@ -71,7 +71,6 @@ export default class DisseminationComponent {
 
             const ball = new Ball(events);
             selectedPeers.forEach((peer: Dealer) => {
-                console.log("SEND: " + ball.serialize());
                 peer.send(ball.serialize());
             });
         }

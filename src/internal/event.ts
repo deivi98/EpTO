@@ -48,12 +48,21 @@ export default class Event {
         return this._msg;
     }
 
+    set msg(msg: Message) {
+        this._msg = msg;
+    }
+
     public serialize(): string {
         return JSON.stringify(this);
     }
 
     public static deserialize(object: Object): Event {
-		const event: Event = Object.assign(new Event(undefined, undefined), object);
+        const event: Event = Object.assign(new Event(undefined, undefined), object);
+        
+        if(event.msg) {
+		    event.msg = Message.deserialize(event.msg);
+		}
+
 		return event;
 	}
 }

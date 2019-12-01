@@ -8,7 +8,6 @@ import Ball from "./ball";
 
 export default class Process extends EventEmitter {
 
-    private static _idInc = 0;
     private static _eventIdInc = 0;
     private _id: string;
     private _ip: string;
@@ -77,12 +76,10 @@ export default class Process extends EventEmitter {
         const processContext: Process = this;
 
         this._router.receive().then((buffer) => {
-            console.log(this._id + ": Mensaje recibido:");
             const serializedBall: Object = JSON.parse(buffer[1].toString());
 
             var ball: Ball = Ball.deserialize(serializedBall);
 
-            console.log(ball);
             this._disseminationComponent.recieveBall(ball);
             processContext.listen();
         });
@@ -94,10 +91,6 @@ export default class Process extends EventEmitter {
 
         const event: Event = new Event(eventId, msg);
         this._disseminationComponent.epToBroadcast(event);
-    }
-
-    public static newId(): number {
-        return this._idInc++;
     }
 
     private static newEventId(): number {
