@@ -7,17 +7,21 @@ import * as fs from 'fs';
  * Programa de testeo de EpTO con numero de nodos indefinido
  */
 
-const n: number = 4;
-const delayMessageMillis: number = 50;
-const initialPort: number = 5000;
-var clients: Client[] = [];
-var messageInterval: NodeJS.Timeout;
-var nextMessage: number = 0;
+const n: number = 4;                        // Numero de nodos
+const delayMessageMillis: number = 50;      // Tiempo en milisegundos entre envio de mensajes aleatorios
+const initialPort: number = 5000;           // Puerto inicial
+var clients: Client[] = [];                 // Array de clientes
+var messageInterval: NodeJS.Timeout;        // Interval de NodeJS para el envio de mensajes continuado
+var nextMessage: number = 0;                // Siguiente id autoincremental de mensaje
 
+// Creamos la carpeta test si no existe
 if(!fs.existsSync("test/")) {
     fs.mkdirSync("test/");
 }
 
+/**
+ * Funcion que crea e inicializa los clientes
+ */
 async function startClients(): Promise<void[]> {
 
     var clientPromises: Promise<void>[] = [];
@@ -32,6 +36,10 @@ async function startClients(): Promise<void[]> {
     return Promise.all(clientPromises);
 }
 
+/**
+ * Funcion que selecciona un cliente aleatorio
+ * del array y envia un mensaje
+ */
 function randomMessage() {
 
     var clientPos: number = Math.floor(Math.random() * n);
@@ -40,8 +48,14 @@ function randomMessage() {
     randomClient.epToBroadcast(new Message("Mensaje automatico " + (++nextMessage)));
 }
 
+/**
+ * Funcion de escucha y logueo de los mensajes
+ * recibidos por un cliente
+ * @param client cliente
+ */
 function listenMessages(client: Client) {
 
+    // Borramos el archivo log si existe un antiguo
     if(fs.existsSync("test/" + client.id + ".log")) {
         fs.unlink('test/' + client.id + '.log', (err) => {
             if (err) throw err;
@@ -50,6 +64,7 @@ function listenMessages(client: Client) {
     
     var nextOutputMessage: number = 0;
 
+    // Cliente escucha un mensaje y lo loguea sincronamente en el log (Para evitar desorden al loguear)
     client.on('message', (event: Event) => {
         // console.log("CLIENT " + client.id + " | " + event.sourceId + "(" + event.id +  ") > " + event.msg.data);
         const msg: string = "(" + (++nextOutputMessage) +  ") " + event.sourceId + "(" + event.id +  ") > " + event.msg.data + '\n';
@@ -57,6 +72,11 @@ function listenMessages(client: Client) {
     });
 }
 
+/**
+ * Espera a que inicien los clientes
+ * para iniciar su escucha y conectarlos
+ * cada uno al resto de clientes
+ */
 startClients()
 .then(() => {
 
@@ -71,6 +91,7 @@ startClients()
         }
     }
 
+    // Inicia el envio continuo de mensajes aleatorios
     messageInterval = setInterval(randomMessage, delayMessageMillis);
 })
 .catch((error: any) => {
@@ -79,6 +100,10 @@ startClients()
     process.exit();
 });
 
+/**
+ * Cierra los clientes y sus conexiones correctamente
+ * antes de terminar el programa
+ */
 function closeClients(): void {
     for(var i: 0; i < n; i++) {
         clients[i].close();

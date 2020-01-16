@@ -94,6 +94,10 @@ if(typeof module !== 'undefined' && !module.parent) {
     client.init()
     .then(() => {
 
+        console.log("Introduzca connect:<ip>:<port> para conectarse a otro cliente.");
+        console.log("Para enviar un mensaje escriba libremente");
+        console.log("---------------------------------------------------------------");
+
         // Una vez iniciado, escuchamos e imprimimos eventos recibidos en cuanto lleguen
         client.on('message', (event: Event) => {
             console.log(event.sourceId + "(" + event.id +  ") > " + event.msg.data);
