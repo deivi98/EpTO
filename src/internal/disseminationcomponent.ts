@@ -14,7 +14,8 @@ export default class DisseminationComponent {
     
     // Variables algoritmo EpTO
     private static K: number = 5;                   // Tamaño de la muestra aleatorio de procesos
-    public static TTL: number = 3;                  // Maximo numero de saltos de los eventos
+    public static TTL: number = 64;                 // Maximo numero de saltos de los eventos
+    private static deltha: number = 200;            // Round duration in milliseconds
     private _nextBall: { [id: string]: Event; };    // Conjunto de eventos a enviar en la proxima ronda
     private _peers: Dealer[];                       // Conjunto de conexiones correctas
     
@@ -113,7 +114,7 @@ export default class DisseminationComponent {
      * Comienza las rondas
      */
     public startFirstRound(): void {
-        this._nextRoundInterval = setInterval(this.nextRound, 500, this);
+        this._nextRoundInterval = setInterval(this.nextRound, DisseminationComponent.deltha, this);
     }
 
     /**
