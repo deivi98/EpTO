@@ -145,6 +145,7 @@ startLocalClients()
         manual = true;
         listenKeyboardMessages();
     } else {
+        console.log("Envio aleatorio continuo de mensajes aleatorios iniciado");
         // Inicia el envio continuo de mensajes aleatorios
         messageInterval = setInterval(randomMessage, delayMessageMillis);
     }
