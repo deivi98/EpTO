@@ -1,0 +1,39 @@
+% !TeX spellcheck = es_ES
+\subsection{Qué es EpTO}
+
+Epidemic Total Order Algorithm for Large-Scale Distributed Systems (EpTO) es un protocolo de orden total
+o protocolo de consenso diseñado para sistemas distribuidos altamente escalables. Se trata de un algoritmo
+epidémico que nos garantiza el orden total, la validez e integridad y, con una gran probabilidad, la entrega
+de los mensajes. La idea del protocolo es un simple broadcast: los nodos se envían mensajes entre sí,
+cada nodo a todos los demás. Mensajes que reciben de la capa superior (la aplicación). El objetivo es
+que todos los nodos reciban los mismos mensajes exáctamente en el mismo orden.
+
+\subsection{¿Para qué sirve?}
+
+\begin{wrapfigure}{r}{0.50\textwidth}
+	\centering
+	\includegraphics[width=0.50\textwidth]{epTo-arquitectura.png}
+	\caption{Arquitectura EpTO}
+\end{wrapfigure}
+
+Sus utilidadades son muchas. Dado que es un protocolo, puede ser implementado por debajo de muchas
+aplicaciones que funcionen de forma distribuida y que tengan una gran cantidad de nodos y clientes,
+aplicaciones que necesiten estar siempre disponibles para usarse y que toleren gran cantidad de
+fallos. En definitiva, EpTO se reduce a la comunicación de los nodos de una red distribuida, de forma
+que la aplicación o utilidad que se le de por encima, es abstraída de su funcionamiento.
+
+\subsection{Porqué en NodeJS}
+
+Si hay algo por lo que se caracterizan los sistemas distribuidos, es que son asíncronos. Están preparados
+para funcionar a pesar de los retrasos, caídas y demás fallos. Se piensan para ser muy robustos a pesar de
+toda complicación. NodeJS (Javascript) es un lenguaje asíncrono, pensado para entornos reactivos,
+ocurrencia de eventos. Cuando se dispara un evento este se añade a la cola, donde se desapila el primero
+y se ejecuta el código reactivo correspondiente, el cual puede desencadenar más eventos, y así
+sucesivamente. Los programas terminan en cuanto no esperan ningún evento, cosa que puede no suceder
+nunca.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.4\textwidth]{nodejs-eventloop.png}
+	\caption{Ciclo NodeJS}
+\end{figure}

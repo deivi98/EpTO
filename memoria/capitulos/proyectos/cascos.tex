@@ -1,0 +1,24 @@
+% !TeX spellcheck = es_ES
+\paragraph{El puesto}
+El problema planteado se da en el robot de cascos\footnote{Cascos: transmisiones que ya han agotado su ciclo de vida}. Este es un robot que se encarga de clasificar automáticamente los cascos que entran en la fábrica. Tenemos dos mesas de trabajo en la que los operarios se encargan de dar entrada a los cascos en el sistema de la empresa y el puesto del robot automatizado.
+
+\paragraph{Problema}
+El OEE medido corresponde solo con el tiempo que está trabajando el robot y no mide el tiempo que les cuesta a los operarios dar entrada a los cascos en el sistema, por lo que el ratio obtenido es muy inferior a la realidad.
+
+\paragraph{Solución propuesta}
+Las mesas de trabajo están compuestas por dos ordenadores, en uno se gestiona SAP y en el otro el ERP de la empresa. Se propone la captura de las 4 pantallas del ordenador y medir los cambios en estas, para determinar si se esta trabajando o no. Para hacer esta medición se propone el uso de visión artificial sobre el contenido de la pantalla de los ordenadores.
+
+\paragraph{Mi participación}
+En este proyecto, he desarrollado mejoras en la toma de datos para la medición del OEE, me he encargado de captar en cada puesto si se está realizando el trabajo o no, para su posterior inserción en la base de datos. Para la integración con las gráficas, he tenido que colaborar con un empleado de Elara, quién se encargaba de realizar gráficas y estadísticas con los datos.
+
+\paragraph{Desarrollo del problema}
+Para realizar las mediciones era necesario hacer una captura de pantalla de cada ordenador, cada lapso de tiempo, estas capturas se guardan en una ubicación de red común. Luego otro equipo se encargaba de procesar estas imágenes, determinando si había habido cambios mediante el SSIM\footnote{Structural similarity index} de las dos últimas imágenes.
+
+Al desarrollar esto, vimos que las entradas en el sistema mediante una pistola lectora de códigos de barras era muy rápida y hacía que el lapso entre imágenes fuera muy pequeño, inferior a un segundo, por lo que el equipo de procesamiento se saturaba. Además, a ello se le unía el surgimiento de conflictos de exclusión mutua, en la guarda y lectura de imágenes en la red.
+
+Para solucionar esto, busqué una solución más sencilla basada en el tiempo inactivo del ordenador, esta variable era almacenada internamente por el SO y fácilmente accesible. Por lo que la solución final, ejecutaba un script que obtenía este tiempo cada lapso e insertaba en la base de datos, si había estado trabajando o no el equipo.
+
+\paragraph{Conclusión}
+En el proyecto he visto el cambio de implementar algo en una red propia a algo en una red empresarial con seguridades más avanzadas, donde cosas tan triviales como ejecutar un script puede llegar a ser un quebradero de cabeza, teniendo que buscar alternativas no tan sencillas como la original.
+
+Por último, he visto cómo la solución inicial no siempre es la mejor y muchas veces por el camino puedes encontrar soluciones más sencillas y mejores que resuelven el mismo problema desechando el trabajo realizado hasta el momento.

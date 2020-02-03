@@ -1,0 +1,24 @@
+% !TeX spellcheck = es_ES
+\paragraph{Entorno}
+El programa esta desarrollado para el departamento de IT, en concreto para la creación de procedimientos genéricos de gestión de datos en la Base de datos.
+
+\paragraph{Problema}
+A la hora de insertar una nueva tabla en la base de datos se tiende a crear un paquete con unos procedimientos muy similares entre sí, ya que en la mayor parte de los de casos se requiere hacer un procedimiento de selección, inserción y eliminación, todos muy genéricos. La mayor parte de las veces, estos paquetes son triviales y se pierde mucho tiempo realizando tareas repetitivas.
+
+\paragraph{Mi participación}
+En este caso he realizado el desarrollo íntegro del proyecto.
+
+\paragraph{Solución realizada}
+En la solución realizada, he creado un sistema de plantillas fácilmente editables por parte del usuario. Cada plantilla es un archivo de texto, plano que contiene el procedimiento escrito con cadenas de texto que serán sustituidas por nuestro programa. Por ejemplo: \#\#\#nombresColumnas\#\#\#, será sustituido por los nombres de las columnas de la tabla seleccionada en formato sql.
+
+Por otra parte el usuario cuenta con una interfaz gráfica en la que puede establecer una conexión a la base de datos y obtener un listado con todas las tablas existentes. El usuario seleccionará una tabla y un conjunto de plantillas, generándose automáticamente los procedimientos sql para dicha tabla.
+
+\begin{figure}[h]
+	\caption{Interfaz principal de la aplicación}
+	\centering
+	\label{guibbdd}
+	\includegraphics[width=0.4\textwidth]{bbddUtilities.PNG}
+\end{figure}
+
+\paragraph{Conclusión}
+Este proyecto es un buen ejemplo de automatización de tareas, donde el tiempo invertido a la larga se convierte en un gran ahorro en el día a día. Esto permite dejar a los desarrolladores que se centren en tareas más especializadas, automatizando las tareas triviales.

@@ -1,0 +1,78 @@
+\subsubsection{Diseño}
+
+El diseño está planteado por módulos, cada uno con una función específica. La implementación ha resultado
+mucho más sencilla y ha permitido que el control de versiones y la evolución del proyecto hayan sido
+mucho más limpios y eficientes. Distinguimos los siguientes módulos con una breve descripción:
+
+\paragraph{Client (Cliente)}
+Implementa las funcionalidades básicas de un cliente. Conectarse con otros clientes
+y enviar y recibir mensajes. Es el punto intermedio entre el protocolo y la capa de la aplicación.
+Es decir, la aplicación tendrá uso de un cliente en cada máquina en la que se instale.
+
+\paragraph{Process (Proceso)}
+Implementa las funcionalidades más próximas al nivel de transporte. Conexiones con otros
+procesos, utilización de ZMQ, recepción de mensajes serializados... También posee un
+identificador único y está directamente ligado al cliente. En otras palabras, un cliente
+siempre tiene un proceso, y un proceso siempre pertenece sólo y exclusivamente a un cliente.
+
+\paragraph{Message (Mensaje)}
+Objeto que almacena la información a nivel de la aplicación que contiene un mensaje. Implementa también
+las funciones básicas necesarias para serializar y desserializar los datos de forma que sean transferibles
+a través de la red.
+
+\paragraph{Event (Evento)}
+Objeto que almacena un mensaje y toda la información relevante del evento, como el tiempo de creación,
+el proceso o cliente que lo ha creado, su TTL y su identificador único.
+
+\paragraph{Ball (Canica)}
+Objeto que representa un conjunto de eventos listos a ser enviados. También es totalmente serializable.
+
+\paragraph{Clock (Reloj)}
+Simple módulo que simula el funcionamiento del reloj y nos proporciona el tiempo. Puede estar implementado
+de forma que sea un reloj global o uno lógico.
+
+\paragraph{PSS (Peer Sample Service)}
+Módulo que dado un conjunto de conexiones a procesos correctos y un tamaño de muestra, nos devuelve
+un subconjunto aleatorio de las mismas.
+
+\paragraph{Dissemination Component (Componente de difusión)}
+Implementa todas las funcionalidades de dicho componente. Recepción y envío de canicas,
+rondas..
+
+\paragraph{Ordering Component (Componente de ordenación)}
+Implementa todas las funcionalidades del componente de ordenación. Tan solo consta de dos
+funciones, ordenar y entregar los eventos posibles, y comprobar si un evento es entregable.
+
+\subsubsection{Arquitectura}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{graph.png}
+    \caption{Arquitectura red de nodos}
+    \label{graph}
+\end{figure}
+
+La mayoría de los protocolos de orden total tienen grandes limitaciones, y la primera de ellas suele ser
+la escabilidad. EpTO trata de resolver este problema, ofreciendo una solución funcional para redes
+distribuidas con un gran número de nodos. El problema cuando existen tantos nodos es que llega un punto
+en el que es computacionalmente contraproducente enviar cada mensaje al resto de nodos, dado que la
+cantidad de estos suele ser abrumadora. Y si no se envían a todos es difícil garantizar que el mensaje
+llega finalmente a todos los nodos. EpTO intenta resolver éste problema mediante el reenvío contínuo de los
+mensajes con un máximo determinado número de saltos siempre a un subconjunto (mucho más reducido,
+y no computacionalmente contraproducente) aleatorio de procesos. Los procesos mismos se encargan de
+propagar, no mejor dicho, el mensaje a toda la red.
+
+En la figura \ref{graph} podemos ver un pequeño ejemplo de esto. Aunque todos los nodos saben de la
+existencia del resto, cada vez que éstos reciban un mensaje que deban reenviar, lo harán sólo
+a un subconjunto mínimo de ellos, hasta que finalmente y con las rondas necesarias, el mensaje
+habrá sido recibido por todos los nodos (justo como explica el problema de los hoyos y las canicas).
+
+\subsubsection{Recursos utilizados}
+
+Para el desarrollo del proyecto he utilizado diversos recursos. Para el control versiones
+he utilizado git, y para la implementación Visual Studio Code. Ambos entornos relativamente
+nuevos para mi. También he utilizado npm (node package manager) para el despliegue del
+proyecto y he aprendido LaTeX para redactar ésta misma memoria. Además el proyecto entero está programado
+en Typescript, a diferencia del año pasado, que desarrollé en Javascript puro. Typescript ofrece
+la oportunidad de desarrollar de forma más clara, dado que es un lenguaje tipado, así que
+el código será más fácilmente interpretado.

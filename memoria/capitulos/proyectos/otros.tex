@@ -1,0 +1,28 @@
+% !TeX spellcheck = es_ES
+Durante mi estancia, desarrollé otros proyectos más pequeños según las necesidades del departamento, incluso alguno con un fin puramente formativo, para mejorar nuestra comprensión de cómo se trabaja en una empresa.
+
+\paragraph{Instalación de equipos}
+En el caso de esta empresa, los Sistemas operativos de Windows no son los genéricos, sino que un equipo externo del grupo GKN se encarga de hacerlos a medida para que funcione perfectamente con los programas y equipos de la empresa, implementando seguridad adicional en la red. Todos los equipos de la red están cifrados y no permiten la inserción de dispositivos extraibles no cifrados. Además, el servidor solo da acceso a la red a los equipos que ejecutan este sistema operativo.
+
+Para explicarnos mejor este proceso el encargado de sistemas nos enseñó como realizaban la instalación de nuevos equipos. Para ello mediante la bios cargábamos una imagen de disco que estaba alojada en un servidor externo e instalábamos esta en equipo previamente pre configurada. Puesto que la imagen estaba preconfigurada, una vez realizada la instalación no era necesario instalar ningún software adicional.
+
+\paragraph{Domótica}
+Las luces de la empresa son automáticas, por lo que éstas se encienden y regulan en función de factores externos tomados por sensores, como detectores de presencia o medidores de luz.
+
+El sistema aún no estaba correctamente etiquetado, por lo que nos dejaron al otro alumno de prácticas y a mí realizar el etiquetado de parte de la red. También nos enseñaron el funcionamiento del software que controla estas luces y cómo estaba programado.
+
+\paragraph{Fallos en fábrica}
+Uno de los primeros días para comprender mejor como funcionaba IT, fuimos con nuestro tutor a solucionar los problemas que se iban generando en la fábrica. Este día nos tocó la instalación de una nueva impresora convencional y solucionar los problemas de impresión en una impresora de tickets.
+
+\paragraph{Instalación de cable de fibra}
+Era necesaria la conexión de un switch con el switch troncal para dar acceso a Internet a los equipos conectados a este. El cable ya estaba echado y solo faltaba realizar su conexión, por lo que no supuso un gran problema.
+
+El director del departamento de IT que fue el encargado de realizar esto, nos explicó cómo era la topología de red de la empresa. Todos los switches estaban conectados a un switch central (topología en estrella) y esta conexión siempre se realizaba dos veces. También todos los equipos críticos estaban duplicados, de tal forma que si fallaba algo, la red sigue trabajando sin problema. 
+
+También nos explico cómo funcionaba el sistema de copias de seguridad. Estas se almacenaban periódicamente en el servidor de la empresa y en otro punto de copia ubicado en un edificio independiente. Además de mandarse semanalmente a un servidor de copias del grupo ubicado en Alemania. Ver este funcionamiento nos ayudó a comprender mejor cómo funciona una LAN interna y la importancia de que este siempre activa, generando redundancia para evitar fallos en el sistema.
+
+
+\paragraph{Descargar drivers automáticamente}
+Los drivers de la bios no es posible integrarlos en el sistema operativo, por lo que hay que instalarlos a mano. Para ello se me encomendó automatizar la descarga de la última versión de estos drivers. 
+
+Lo que hice fue desarrollar un script en Powershell que accedía a la web de Dell y descargaba la última versión de drivers de la bios para el equipo pasado por parámetro.
