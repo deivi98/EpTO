@@ -112,6 +112,7 @@ export default class Process extends EventEmitter {
         const processContext: Process = this;
 
         this._router.receive().then((buffer) => {
+            console.log("Hola que tal estas");
             const serializedBall: Object = JSON.parse(buffer[1].toString());
 
             var ball: Ball = Ball.deserialize(serializedBall);
