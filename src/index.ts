@@ -48,7 +48,7 @@ async function startLocalClients(): Promise<void[]> {
     const nodeName: string = localNetwork["nodeName"];
 
     for(var i = 1; i <= n; i++) {
-        var client: Client = new Client('n-' + nodeName + '/client' + i, '0.0.0.0', initialPort + i);
+        var client: Client = new Client('n-' + nodeName + '-client' + i, '0.0.0.0', initialPort + i);
         clientPromises.push(client.init());
         console.log("Preparado cliente " + client.id);
         localClients.push(client);
@@ -82,6 +82,8 @@ function listenMessages(client: Client) {
             if (err) throw err;
         });
     }
+    
+    // fs.closeSync(fs.openSync("test/" + client.id + ".log", 'w'));
     
     var nextOutputMessage: number = 0;
 
