@@ -45,9 +45,10 @@ async function startLocalClients(): Promise<void[]> {
 
     const initialPort: number = localNetwork["initialPort"];
     const n: number = localNetwork["clients"];
+    const nodeName: string = localNetwork["nodeName"];
 
     for(var i = 1; i <= n; i++) {
-        var client: Client = new Client('client' + i, '0.0.0.0', initialPort + i);
+        var client: Client = new Client('n-' + nodeName + '/client' + i, '0.0.0.0', initialPort + i);
         clientPromises.push(client.init());
         console.log("Preparado cliente " + client.id);
         localClients.push(client);
@@ -168,12 +169,10 @@ function listenKeyboardMessages(): void {
         
         if(args.length > 1) {
 
-            const localClient: Client = localClients.find((client: Client) => {
-                return client.id == args[0];
-            });
+            const localClient: Client = localClients[parseInt(args[0]) - 1];
 
             if(!localClient) {
-                console.log("No existe ningun cliente local llamado " + args[0] + "!");
+                console.log("No existe el cliente local " + args[0] + "!");
                 return;
             }
 
