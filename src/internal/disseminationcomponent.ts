@@ -13,7 +13,7 @@ import Ball from './ball';
 export default class DisseminationComponent {
     
     // Variables algoritmo EpTO
-    private static K: number = 5;                   // Tamaño de la muestra aleatorio de procesos
+    private static K: number = 15;                  // Tamaño de la muestra aleatorio de procesos
     public static TTL: number = 64;                 // Maximo numero de saltos de los eventos
     private static deltha: number = 200;            // Round duration in milliseconds
     private _nextBall: { [id: string]: Event; };    // Conjunto de eventos a enviar en la proxima ronda
