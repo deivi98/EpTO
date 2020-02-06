@@ -100,6 +100,7 @@ export default class DisseminationComponent {
             const ball = new Ball(events);
             selectedPeers.forEach((peer: Dealer) => {
                 peer.send(ball.serialize());
+                console.log("Enviado");
             });
         }
 
