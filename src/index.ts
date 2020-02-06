@@ -47,7 +47,7 @@ async function startLocalClients(): Promise<void[]> {
     const n: number = localNetwork["clients"];
 
     for(var i = 1; i <= n; i++) {
-        var client: Client = new Client('client' + i, '127.0.0.1', initialPort + i);
+        var client: Client = new Client('client' + i, '0.0.0.0', initialPort + i);
         clientPromises.push(client.init());
         console.log("Preparado cliente " + client.id);
         localClients.push(client);
