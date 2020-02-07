@@ -90,6 +90,8 @@ export default class OrderingComponent {
             }
         });
 
+        const entorno = this;
+
         // Para todos los eventos finalmente entregables,
         // los ordenamos por tiempo y por id del proceso/cliente emisor
         // y los entregamos a la aplicación.
@@ -97,30 +99,30 @@ export default class OrderingComponent {
 
             if(e1.ts == e2.ts) {
 
-                if(!this.l) {
+                if(!entorno.l) {
                     console.log(e2.sourceId);
                     console.log(e1.sourceId);
                     console.log(e1.ts);
                 }
                 if(e1.sourceId < e2.sourceId) {
-                    if(!this.l) {
+                    if(!entorno.l) {
                         console.log(e2.sourceId);
                         console.log("-1");
-                        this.l = true;
+                        entorno.l = true;
                     }
                     return -1;
                 } else if(e1.sourceId > e2.sourceId) {
-                    if(!this.l) {
+                    if(!entorno.l) {
                         console.log(e2.sourceId);
                         console.log("1");
-                        this.l = true;
+                        entorno.l = true;
                     }
                     return 1;
                 } else {
-                    if(!this.l) {
+                    if(!entorno.l) {
                         console.log(e2.sourceId);
                         console.log("0");
-                        this.l = true;
+                        entorno.l = true;
                     }
                     return 0;
                 }
