@@ -95,7 +95,7 @@ function listenMessages(client: Client) {
             console.log("CLIENT " + client.id + " | " + event.sourceId + "(" + event.id +  ") > " + event.msg.data);
         } else {
             const id: string = event.id.split("_")[1];
-            const msg: string = sprintfjs.sprintf("%9d | %20s (%5s) > " + event.msg.data + '\n', ++nextOutputMessage, event.sourceId, id);
+            const msg: string = sprintfjs.sprintf("%9d | %20s (%5s) [%20d] > " + event.msg.data + '\n', ++nextOutputMessage, event.sourceId, id, event.ts);
             fs.appendFileSync('test/' + client.id + '.log', msg, 'utf8');
         }
     });
