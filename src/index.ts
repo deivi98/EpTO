@@ -4,6 +4,7 @@ import Event from './internal/event';
 import * as fs from 'fs';
 import * as readlineSync from 'readline-sync';
 import * as rimraf from 'rimraf';
+import * as sprintfjs from 'sprintf-js';
 
 /**
  * Programa de testeo de EpTO con numero de nodos indefinido
@@ -93,7 +94,8 @@ function listenMessages(client: Client) {
         if(manual) {
             console.log("CLIENT " + client.id + " | " + event.sourceId + "(" + event.id +  ") > " + event.msg.data);
         } else {
-            const msg: string = "(" + (++nextOutputMessage) +  ") " + event.sourceId + "(" + event.id +  ") > " + event.msg.data + '\n';
+            const id: string = event.id.split("_")[1];
+            const msg: string = sprintfjs.sprintf("%9d | %20s (%5s) > " + event.msg.data + '\n', ++nextOutputMessage, event.sourceId, id);
             fs.appendFileSync('test/' + client.id + '.log', msg, 'utf8');
         }
     });
