@@ -93,7 +93,20 @@ export default class OrderingComponent {
         // los ordenamos por tiempo y por id del proceso/cliente emisor
         // y los entregamos a la aplicación.
         realDeliverableEvents.sort(function(e1: Event, e2: Event): number {
-            return (e1.ts - e2.ts == 0 ? (e1.sourceId == e2.sourceId ? 0: (e1.sourceId < e2.sourceId ? -1: 1)): e1.ts - e2.ts);
+
+            if(e1.ts == e2.ts) {
+                if(e1.sourceId < e2.sourceId) {
+                    return -1;
+                } else if(e1.sourceId > e2.sourceId) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                return e1.ts - e2.ts;
+            }
+
+            // return (e1.ts - e2.ts == 0 ? (e1.sourceId == e2.sourceId ? 0: (e1.sourceId < e2.sourceId ? -1: 1)): e1.ts - e2.ts);
             // return (e1.ts - e2.ts) || (e1.sourceId == e2.sourceId ? 0: (e1.sourceId < e2.sourceId ? -1: 1));
         }).forEach((event: Event) => {
             this._delivered[event.id] = event;
