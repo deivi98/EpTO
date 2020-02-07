@@ -95,11 +95,16 @@ export default class OrderingComponent {
         realDeliverableEvents.sort(function(e1: Event, e2: Event): number {
 
             if(e1.ts == e2.ts) {
+                console.log(e1.sourceId);
+                console.log(e2.sourceId);
                 if(e1.sourceId < e2.sourceId) {
+                    console.log("-1");
                     return -1;
                 } else if(e1.sourceId > e2.sourceId) {
+                    console.log("1");
                     return 1;
                 } else {
+                    console.log("0");
                     return 0;
                 }
             } else {
