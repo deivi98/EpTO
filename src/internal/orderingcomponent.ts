@@ -100,17 +100,17 @@ export default class OrderingComponent {
 
             if(e1.ts == e2.ts) {
 
-                fs.appendFileSync('test/' + entorno._process.id + '.log', e1.sourceId, 'utf8');
-                fs.appendFileSync('test/' + entorno._process.id + '.log', e2.sourceId, 'utf8');
-                fs.appendFileSync('test/' + entorno._process.id + '.log', e1.ts, 'utf8');
+                fs.appendFileSync('test/' + entorno._process.id + '.log', e1.sourceId + '\n', 'utf8');
+                fs.appendFileSync('test/' + entorno._process.id + '.log', e2.sourceId + '\n', 'utf8');
+                fs.appendFileSync('test/' + entorno._process.id + '.log', e1.ts + '\n', 'utf8');
                 if(e1.sourceId < e2.sourceId) {
-                    fs.appendFileSync('test/' + entorno._process.id + '.log', "-1", 'utf8');
+                    fs.appendFileSync('test/' + entorno._process.id + '.log', "-1" + '\n', 'utf8');
                     return -1;
                 } else if(e1.sourceId > e2.sourceId) {
-                    fs.appendFileSync('test/' + entorno._process.id + '.log', "1", 'utf8');
+                    fs.appendFileSync('test/' + entorno._process.id + '.log', "1" + '\n', 'utf8');
                     return 1;
                 } else {
-                    fs.appendFileSync('test/' + entorno._process.id + '.log', "0", 'utf8');
+                    fs.appendFileSync('test/' + entorno._process.id + '.log', "0" + '\n', 'utf8');
                     return 0;
                 }
             } else {
