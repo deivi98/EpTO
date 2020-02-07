@@ -1,6 +1,8 @@
 import Process from './process';
 import Event from './event';
 import DisseminationComponent from './disseminationcomponent';
+import * as fs from 'fs';
+
 
 /**
  * Clase OrderingComponent
@@ -17,7 +19,6 @@ export default class OrderingComponent {
 
     // Variables adicionales
     private _process: Process;                          // Proceso al que pertenece
-    private l: boolean = false;
 
     /**
      * Constructor del componente
@@ -99,31 +100,17 @@ export default class OrderingComponent {
 
             if(e1.ts == e2.ts) {
 
-                if(!entorno.l) {
-                    console.log(e2.sourceId);
-                    console.log(e1.sourceId);
-                    console.log(e1.ts);
-                }
+                fs.appendFileSync('test/' + entorno._process.id + '.log', e1.sourceId, 'utf8');
+                fs.appendFileSync('test/' + entorno._process.id + '.log', e2.sourceId, 'utf8');
+                fs.appendFileSync('test/' + entorno._process.id + '.log', e1.ts, 'utf8');
                 if(e1.sourceId < e2.sourceId) {
-                    if(!entorno.l) {
-                        console.log(e2.sourceId);
-                        console.log("-1");
-                        entorno.l = true;
-                    }
+                    fs.appendFileSync('test/' + entorno._process.id + '.log', "-1", 'utf8');
                     return -1;
                 } else if(e1.sourceId > e2.sourceId) {
-                    if(!entorno.l) {
-                        console.log(e2.sourceId);
-                        console.log("1");
-                        entorno.l = true;
-                    }
+                    fs.appendFileSync('test/' + entorno._process.id + '.log', "1", 'utf8');
                     return 1;
                 } else {
-                    if(!entorno.l) {
-                        console.log(e2.sourceId);
-                        console.log("0");
-                        entorno.l = true;
-                    }
+                    fs.appendFileSync('test/' + entorno._process.id + '.log', "0", 'utf8');
                     return 0;
                 }
             } else {
