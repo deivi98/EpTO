@@ -5,6 +5,7 @@ import OrderingComponent from "./orderingcomponent";
 import Message from "../app/message";
 import Event from "./event";
 import Ball from "./ball";
+import Connection from "./connection";
 
 /**
  * Clase Process
@@ -86,10 +87,8 @@ export default class Process extends EventEmitter {
      * @param port puerto del proceso externo
      */
     public connect(ip: string, port: number) {
-
-        const connectionDealer: Dealer = new Dealer();
-        connectionDealer.connect("tcp://" + ip + ":" + port);
-        this._disseminationComponent.peers.push(connectionDealer);
+        const conn: Connection = new Connection(ip, port);
+        this._disseminationComponent.peers.push(conn);
     }
 
     /**
@@ -98,9 +97,9 @@ export default class Process extends EventEmitter {
     public close(): void {
 
         this._disseminationComponent.endRounds();
-        this._disseminationComponent.peers.forEach((dealer: Dealer) => {
-            dealer.close();
-        });
+        // this._disseminationComponent.peers.forEach((dealer: Dealer) => {
+        //     dealer.close();
+        // });
         this._router.close();
     }
 

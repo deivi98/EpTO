@@ -4,6 +4,7 @@ import Clock from './clock';
 import { Dealer } from "zeromq";
 import PSS from './pss';
 import Ball from './ball';
+import Connection from './connection';
 
 /**
  * Clase DisseminationComponent
@@ -13,15 +14,15 @@ import Ball from './ball';
 export default class DisseminationComponent {
     
     // Variables algoritmo EpTO
-    private static K: number = 320;                  // Tamaño de la muestra aleatorio de procesos
-    public static TTL: number = 700;                 // Maximo numero de saltos de los eventos
-    private static deltha: number = 200;            // Round duration in milliseconds
-    private _nextBall: { [id: string]: Event; };    // Conjunto de eventos a enviar en la proxima ronda
-    private _peers: Dealer[];                       // Conjunto de conexiones correctas
+    private static K: number = 320;                     // Tamaño de la muestra aleatorio de procesos
+    public static TTL: number = 700;                    // Maximo numero de saltos de los eventos
+    private static deltha: number = 200;                // Round duration in milliseconds
+    private _nextBall: { [id: string]: Event; };        // Conjunto de eventos a enviar en la proxima ronda
+    private _peers: Connection[];                       // Conjunto de conexiones correctas
     
     // Variables adicionales
-    private _process: Process;                      // Proceso al que pertenece
-    private _nextRoundInterval: NodeJS.Timeout;     // Variable que guarda el interval repetitivo de las rondas
+    private _process: Process;                          // Proceso al que pertenece
+    private _nextRoundInterval: NodeJS.Timeout;         // Variable que guarda el interval repetitivo de las rondas
 
     /**
      * Constructor del componente
@@ -36,7 +37,7 @@ export default class DisseminationComponent {
     /**
      * Devuelve el conjunto de conexiones correctas a otros procesos
      */
-    get peers(): Dealer[] {
+    get peers(): Connection[] {
         return this._peers;
     }
 
@@ -95,11 +96,13 @@ export default class DisseminationComponent {
         // Si no es nula, escoge una muestra aleatoria de conexiones,
         // crea una ball con los eventos, la serializa y la envia a todas las conexiones
         if(events.length > 0) {
-            const selectedPeers: Dealer[] = PSS.sample(context._peers, DisseminationComponent.K);
+            const selectedPeers: Connection[] = PSS.sample(context._peers, DisseminationComponent.K);
 
             const ball = new Ball(events);
-            selectedPeers.forEach((peer: Dealer) => {
-                peer.send(ball.serialize());
+            selectedPeers.forEach((peer: Connection) => {
+                const connDealer: Dealer = peer.getConnectionDealer();
+                connDealer.send(ball.serialize());
+                connDealer.close();
             });
         }
 
