@@ -45,7 +45,7 @@ export default class OrderingComponent {
         // Para cada evento del ball
         ball.forEach((event: Event) => {
             // Si no ha sido entregado y no es anterior al último evento entregado
-            if(!this._delivered[event.id] && event.ts >= this._lastDeliveredTs) {
+            if(!this._delivered[event.id] && event.ts > this._lastDeliveredTs) {
 
                 // Si ya habia sido recibido por el componente
                 if(this._recieved[event.id]) {
