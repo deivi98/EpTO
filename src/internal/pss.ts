@@ -1,4 +1,4 @@
-import Connection from './connection';
+import { Dealer } from 'zeromq';
 
 /**
  * Clase PSS (Peer Sample Service)
@@ -12,9 +12,9 @@ export default class PSS {
      * Permuta aleatoriamente el conjunto o lista de conexiones
      * @param peers conjunto de conexiones
      */
-    private static shuffle(peers: Connection[]): Connection[] {
+    private static shuffle(peers: Dealer[]): Dealer[] {
         var ctr = peers.length;
-        var temp: Connection;
+        var temp: Dealer;
         var index: number;
     
         while(ctr > 0) {
@@ -34,7 +34,7 @@ export default class PSS {
      * @param peers conjunto de conexiones
      * @param K tamaño de la muestra
      */
-    public static sample(peers: Connection[], K: number): Connection[] {
+    public static sample(peers: Dealer[], K: number): Dealer[] {
 
         // Si no hay conexiones suficientes para la muestra, se devuelven todos
         if(peers.length < K) {
