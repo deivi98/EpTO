@@ -12,20 +12,34 @@ export default class PSS {
      * Permuta aleatoriamente el conjunto o lista de conexiones
      * @param peers conjunto de conexiones
      */
-    private static shuffle(peers: Dealer[]): Dealer[] {
-        var ctr = peers.length;
-        var temp: Dealer;
-        var index: number;
+    // private static shuffle(peers: Dealer[]): Dealer[] {
+    //     var ctr = peers.length;
+    //     var temp: Dealer;
+    //     var index: number;
+    //     var indexes: number[] = [];
     
-        while(ctr > 0) {
-            index = Math.floor(Math.random() * ctr);
-            ctr--;
+    //     while(ctr > 0) {
+    //         index = Math.floor(Math.random() * ctr);
+    //         ctr--;
+    //         indexes.push(index);
 
-            temp = peers[ctr];
-            peers[ctr] = peers[index];
-            peers[index] = temp;
+    //         temp = peers[ctr];
+    //         peers[ctr] = peers[index];
+    //         peers[index] = temp;
+    //     }
+
+    //     return peers;
+    // }
+
+    /**
+     * Permuta aleatoriamente el conjunto o lista de conexiones
+     * @param peers conjunto de conexiones
+     */
+    private static shuffle(peers: Dealer[]): Dealer[] {
+        for(let i = peers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [peers[i], peers[j]] = [peers[j], peers[i]];
         }
-
         return peers;
     }
 
