@@ -79,9 +79,7 @@ function listenMessages(client: Client) {
 
     // Borramos el archivo log si existe un antiguo
     if(fs.existsSync("test/" + client.id + ".log")) {
-        fs.unlink('test/' + client.id + '.log', (err) => {
-            if (err) throw err;
-        });
+        fs.unlinkSync('test/' + client.id + '.log');
     }
     
     // fs.closeSync(fs.openSync("test/" + client.id + ".log", 'w'));
