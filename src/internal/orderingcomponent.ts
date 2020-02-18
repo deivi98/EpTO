@@ -65,7 +65,6 @@ export default class OrderingComponent {
                 
                 if(this._recieved[idA].ts == this._recieved[idB].ts) {
 
-                    console.log("Si");
                     const maxTTL: number = Math.max(this._recieved[idA].ttl, this._recieved[idB].ttl);
                     this._recieved[idA].ttl = maxTTL;
                     this._recieved[idB].ttl = maxTTL;
