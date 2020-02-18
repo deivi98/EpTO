@@ -1,8 +1,6 @@
 import Process from './process';
 import Event from './event';
 import DisseminationComponent from './disseminationcomponent';
-import * as fs from 'fs';
-
 
 /**
  * Clase OrderingComponent
@@ -103,7 +101,7 @@ export default class OrderingComponent {
             }
         });
 
-        const entorno = this;
+        // const entorno = this;
 
         // Para todos los eventos finalmente entregables,
         // los ordenamos por tiempo y por id del proceso/cliente emisor
