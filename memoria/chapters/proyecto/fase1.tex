@@ -1,7 +1,7 @@
 \subsubsection{NodeJS y ZMQ}
 
 Durante el primer mes me dediqué a recordar NodeJS y ZMQ. Utilicé ambas durante la beca
-que realicé el año pasado, la cuál también era en sistemas distribuidos. Para recordar
+que realicé el año pasado, la cuál era también en sistemas distribuidos. Para recordar
 NodeJS utilicé el mismo libro que el año pasado \cite{therightway}.
 El libro tiene una serie de capitulos con ejercicios básicos que explican progresivamente
 todo lo necesario. ZeroMQ (ØMQ) \cite{zmq} es una libreria universal de código abierto de
@@ -38,7 +38,7 @@ La idea detrás de EpTO para la entrega probabilística es el problema de los ho
 Los nodos son pensados como un conjunto de hoyos y cada mensaje como un conjunto de canicas. Los hoyos
 a los que no caen canicas representan los nodos a los que sel mensaje no ha llegado debido a un
 fallo. El objetivo es enviar el número de canicas por mensaje necesario para garantizar que la probabilidad de
-que todos los hoyos hayan recibido el mensaje por lo menos una vez sea muy alta.
+que todos los hoyos hayan recibido el mensaje una vez por lo menos sea muy alta.
 
 El protocolo consta de dos componentes principales: el componente de difusión y el componente de ordenación.
 
@@ -52,7 +52,7 @@ El protocolo consta de dos componentes principales: el componente de difusión y
 Este componente se encarga de la comunicación y difusión de mensajes, los cuales se denominan eventos.
 Cada evento es un mensaje que se desea enviar a todos los nodos. El componente empaqueta múltiples eventos
 en lo que llama BALL (lo que antes hemos entendido como canica), y la envía al resto de nodos. Antes de
-comprender el funcionamiento completo necesitamos entender las variables utilizadas. Tenemos el conjunto de
+comprender el funcionamiento completo necesitamos entender las variables utilizadas: Tenemos el conjunto de
 todos los procesos correctos (view), K es el tamaño de la muestra de procesos a los que va a ser enviada
 la próxima BALL, TTL (Time To Live) es el número máximo de saltos que un evento puede realizar (mismo
 funcionamiento que los paquetes TCP-IP), delta es la duración de cada ronda, y nextBall es la proxima BALL
@@ -64,7 +64,7 @@ se analizan todos sus eventos de forma que si su TTL ya es muy alto se ignoran, 
 o/e introducen en la próxima BALL para ser reenviados. Cuando comienza la próxima ronda, se aumenta en
 1 el TTL de todos los eventos pertenecientes a la próxima BALL, se selecciona un subconjunto de tamaño
 K de todos los procesos correctos, y se les envía la BALL. Una vez hecho, se pasa la BALL al componente
-de ordenación y se reinicia la BALL a conjunto vacío para la próxima ronda.
+de ordenación y se reinicia a conjunto vacío para la próxima ronda.
 
 \clearpage
 
