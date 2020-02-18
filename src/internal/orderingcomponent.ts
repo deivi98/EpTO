@@ -60,6 +60,19 @@ export default class OrderingComponent {
             }
         });
 
+        Object.keys(this._recieved).forEach((idA: string) => {
+            Object.keys(this._recieved).forEach((idB: string) => {
+                
+                if(this._recieved[idA].ts == this._recieved[idB].ts) {
+
+                    console.log("Si");
+                    const maxTTL: number = Math.max(this._recieved[idA].ttl, this._recieved[idB].ttl);
+                    this._recieved[idA].ttl = maxTTL;
+                    this._recieved[idB].ttl = maxTTL;
+                }
+            }); 
+        });
+
         // Variables auxiliares
         var minQueuedTs: number = Number.MAX_VALUE;     // Tiempo del evento no entregable más antiguo
         var deliverableEvents: Event[] = [];            // Eventos entregables
