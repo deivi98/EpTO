@@ -5,7 +5,7 @@ que realicé el año pasado, la cuál era también en sistemas distribuidos. Par
 NodeJS utilicé el mismo libro que el año pasado \cite{therightway}.
 El libro tiene una serie de capitulos con ejercicios básicos que explican progresivamente
 todo lo necesario. ZeroMQ (ØMQ) \cite{zmq} es una libreria universal de código abierto de
-comunicación mediante mensajes disponible en múltiples mensajes, entre ellos, Node. Es
+comunicación mediante mensajes disponible en múltiples languages, entre ellos, Node. Es
 la capa intermedia entre nuestro protocolo y el nivel de transporte. ZMQ se encarga de
 todo lo necesario a nivel socket: envío y recepción de mensajes, creación y escucha de
 sockets, serialización, conexión, restablecimiento de la misma... Hace que resulte muy
@@ -55,8 +55,8 @@ en lo que llama BALL (lo que antes hemos entendido como canica), y la envía al 
 comprender el funcionamiento completo necesitamos entender las variables utilizadas: Tenemos el conjunto de
 todos los procesos correctos (view), K es el tamaño de la muestra de procesos a los que va a ser enviada
 la próxima BALL, TTL (Time To Live) es el número máximo de saltos que un evento puede realizar (mismo
-funcionamiento que los paquetes TCP-IP), delta es la duración de cada ronda, y nextBall es la proxima BALL
-o conjunto de eventos próxima a enviar.
+funcionamiento que los paquetes TCP-IP), delta es la duración de cada ronda, y nextBall es la próxima BALL
+o conjunto de eventos próximo a enviar.
 
 El funcionamiento es simple: cuando el proceso recibe un evento
 nuevo desde la aplicación, lo añade a la próxima BALL. Cuando se recibe una BALL de otro proceso,
@@ -93,6 +93,6 @@ así que se ordenan por proceso de origen y tiempo de creación y se entregan.
 \paragraph{Reloj y sincronización}
 La ordenación de los eventos o mensajes de éste algoritmo depende en gran medida del tiempo en el que
 se generan. Para ello el artículo asume que utilizando un reloj global el orden se garantiza siempre,
-aunque también dice que también puede funcionar con un reloj lógico perfectamente, y explica cómo.
+aunque dice también que puede funcionar con un reloj lógico perfectamente, y explica cómo.
 
 \clearpage

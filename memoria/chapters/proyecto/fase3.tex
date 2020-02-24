@@ -8,9 +8,21 @@ sí van a estar en máquinas totalmente independientes. Los contenedores están 
 entre sí, permitiendome así testar el algoritmo como si de una red real se tratase.
 
 Así pues, realicé múltiples tests y pruebas, desde redes con tamaño pequeño (7 nodos) hasta redes
-de gran tamaño (700 nodos). Por supuesto, inicialmente tuve que lidiar con problemas que iban surgiendo,
+de gran tamaño (70 nodos). Por supuesto, inicialmente tuve que lidiar con problemas que iban surgiendo,
 sobretodo según aumentaba el tamaño de la red y la frecuencia con que se enviaban los mensajes entre
 sus nodos. Progresivamente fui corrigiendo los errores en el código y resolviendo los problemas
 generados en las pruebas, hasta que obtuve una versión perfectamente funcional.
 
 \subsubsection{Resultados}
+
+Como se ha descrito inicialmente, el objetivo del algoritmo es conseguir que todos los nodos
+de la red reciban los mismos mensajes exáctamente en el mismo orden. Para comprobar esto,
+implementé una serie de tests que imprimían en ficheros por cada cliente los mensajes
+según estos los recibían, y posteriormente comparaba los registros de los diferentes clientes.
+En todas las pruebas realizadas, todos los registros coinciden al 100\%.
+
+Hay que tener en cuenta, que dado que las pruebas se realizaron en un entorno más bien cerrado, un clúster con todas las
+máquinas en la misma red, con una buena comunicación entre sus máquinas, es muy improbable la
+pérdida de mensajes. En un sistema más grande, con más asincronía, sería de esperar la falta
+de algunos mensajes (cosa totalmente normal). Los resultados para este proyecto son óptimos,
+al menos desde punto de vista.
