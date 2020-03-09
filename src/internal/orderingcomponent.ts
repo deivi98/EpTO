@@ -144,6 +144,6 @@ export default class OrderingComponent {
      * @param event evento a comprobar
      */
     private isDeliverable(event: Event): boolean {
-        return event.ttl > DisseminationComponent.TTL;
+        return event.ttl > this._process.disseminationComponent.TTL;
     }
 }

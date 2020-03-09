@@ -1,5 +1,6 @@
 {
     "127.0.0.1": {
+        "nodeName": "test",
         "initialPort": 5000,
         "clients": 50
     },

@@ -56,6 +56,6 @@ export default class PSS {
         }
 
         peers = PSS.shuffle(peers);
-        return peers.slice(0, K-1);
+        return peers.slice(0, K);
     }
 }

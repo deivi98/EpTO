@@ -13,8 +13,8 @@ import Ball from './ball';
 export default class DisseminationComponent {
     
     // Variables algoritmo EpTO
-    private static K: number = 40;                  // Tamaño de la muestra aleatorio de procesos
-    public static TTL: number = 70;                 // Maximo numero de saltos de los eventos
+    private K: number;                              // Tamaño de la muestra aleatorio de procesos
+    public TTL: number;                             // Maximo numero de saltos de los eventos
     private static deltha: number = 200;            // Round duration in milliseconds
     private _nextBall: { [id: string]: Event; };    // Conjunto de eventos a enviar en la proxima ronda
     private _peers: Dealer[];                       // Conjunto de conexiones correctas
@@ -27,10 +27,12 @@ export default class DisseminationComponent {
      * Constructor del componente
      * @param process proceso al que pertenece
      */
-    constructor(process: Process) {
+    constructor(process: Process, n: number, f: number) {
         this._process = process;
         this._nextBall = {};
         this._peers = [];
+        this.TTL = n;
+        this.K = n - f;
     }
 
     /**
@@ -60,7 +62,7 @@ export default class DisseminationComponent {
         // Para cada evento del ball
         ball.events.forEach((event: Event) => {
             // Si no ha llegado al límite de saltos
-            if(event.ttl < DisseminationComponent.TTL) {
+            if(event.ttl < this.TTL) {
                 
                 const localEvent: Event = this._nextBall[event.id];
                 // Si ya existe el evento aquí
@@ -95,7 +97,7 @@ export default class DisseminationComponent {
         // Si no es nula, escoge una muestra aleatoria de conexiones,
         // crea una ball con los eventos, la serializa y la envia a todas las conexiones
         if(events.length > 0) {
-            const selectedPeers: Dealer[] = PSS.sample(context._peers, DisseminationComponent.K);
+            const selectedPeers: Dealer[] = PSS.sample(context._peers, this.K);
 
             const ball = new Ball(events);
             selectedPeers.forEach((peer: Dealer) => {

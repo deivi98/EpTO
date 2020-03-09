@@ -24,6 +24,19 @@ if(!fs.existsSync("network.json")) {
 // Leemos configuracion
 const networkConfig = JSON.parse(fs.readFileSync('network.json', 'utf8'));
 
+function countTotalClients(networkConfig): number {
+    let count: number = 0;
+
+    Object.values(networkConfig).forEach((nodeConfig) => {
+        count += parseInt(nodeConfig["clients"]);
+    });
+
+    return count;
+}
+
+const N: number = countTotalClients(networkConfig);
+const F: number = N / 2 - 1;
+
 // Eliminamos la carpeta test si existe y la volvemos a crear
 if(fs.existsSync("test/")) {
     rimraf.sync("test/");
@@ -49,7 +62,7 @@ async function startLocalClients(): Promise<void[]> {
     const nodeName: string = localNetwork["nodeName"];
 
     for(var i = 1; i <= n; i++) {
-        var client: Client = new Client('n-' + nodeName + '-client' + i, '0.0.0.0', initialPort + i);
+        var client: Client = new Client('n-' + nodeName + '-client' + i, '0.0.0.0', initialPort + i, N, F);
         clientPromises.push(client.init());
         console.log("Preparado cliente " + client.id);
         localClients.push(client);
@@ -107,21 +120,16 @@ function listenMessages(client: Client) {
 startLocalClients()
 .then(() => {
 
-    const localNetwork = networkConfig["127.0.0.1"];
-    const initialPort: number = localNetwork["initialPort"];
-    const n: number = localNetwork["clients"];
-
     // Conectamos cada cliente local con el resto de los locales
-    for(var i = 1; i <= n; i++) {
+    localClients.forEach((a: Client) => {
+        listenMessages(a);
 
-        listenMessages(localClients[i-1]);
-
-        for(var e = 1; e <= n; e++) {
-            if(i != e) {
-                localClients[i-1].connect('127.0.0.1', initialPort + e);
+        localClients.forEach((b: Client) => {
+            if(a.id != b.id) {
+                a.connect("127.0.0.1", b.port);
             }
-        }
-    }
+        });
+    });
 
     // Conectamos cada cliente local con el resto de clientes de todos los nodos remotos 
     Object.keys(networkConfig).forEach(function(key) {
@@ -130,11 +138,11 @@ startLocalClients()
             const initalRemotePort: number = remoteNodeNetwork["initialPort"];
             const m: number = remoteNodeNetwork["clients"];
 
-            for(var i = 1; i <= n; i++) {
+            localClients.forEach((client: Client) => {
                 for(var e = 1; e <= m; e++) {
-                    localClients[i-1].connect(key, initalRemotePort + e);
-                }
-            }
+                    client.connect(key, initalRemotePort + e);
+                } 
+            });
         }
     });
 

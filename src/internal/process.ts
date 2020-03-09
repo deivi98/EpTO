@@ -28,13 +28,13 @@ export default class Process extends EventEmitter {
      * @param ip ip del proceso
      * @param port puerto del proceso
      */
-    constructor(id: string, ip: string, port: number) {
+    constructor(id: string, ip: string, port: number, n: number, f: number) {
         super();
         this._id = id;
         this._ip = ip;
         this._port = port;
         this._router = new Router();
-        this._disseminationComponent = new DisseminationComponent(this);
+        this._disseminationComponent = new DisseminationComponent(this, n, f);
         this._orderingComponent = new OrderingComponent(this);
     }
 
@@ -64,6 +64,13 @@ export default class Process extends EventEmitter {
      */
     get orderingComponent(): OrderingComponent {
         return this._orderingComponent;
+    }
+
+    /**
+     * Devuelve el componente de ordenación del proceso
+     */
+    get disseminationComponent(): DisseminationComponent {
+        return this._disseminationComponent;
     }
 
     /**
