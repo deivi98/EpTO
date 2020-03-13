@@ -35,7 +35,12 @@ function countTotalClients(networkConfig): number {
 }
 
 const N: number = countTotalClients(networkConfig);
-const F: number = N / 2 - 1;
+var F: number;
+if(N % 2 == 0) {
+    F = Math.floor((N - 1) / 2);
+} else {
+    F = Math.floor(N / 2);
+}
 
 // Eliminamos la carpeta test si existe y la volvemos a crear
 if(fs.existsSync("test/")) {
@@ -147,6 +152,7 @@ startLocalClients()
     });
 
     console.log("----------------------------------------------------------------");
+    console.log("N = " + N + ", F = " + F);
     console.log("Todos los clientes han sido iniciados y conectados correctamente");
     
     if(readlineSync.keyInYN('Quieres enviar mensaje manualmente? (Si no, estos se enviaran aleatoriamente cada ' + delayMessageMillis + 'ms)')) {
