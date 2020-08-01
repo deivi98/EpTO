@@ -1,6 +1,7 @@
 import Process from './process';
 import Event from './event';
 import Clock from './clock';
+import { LogicalClock } from './clock';
 import { Dealer } from "zeromq";
 import PSS from './pss';
 import Ball from './ball';
@@ -22,17 +23,21 @@ export default class DisseminationComponent {
     // Variables adicionales
     private _process: Process;                      // Proceso al que pertenece
     private _nextRoundInterval: NodeJS.Timeout;     // Variable que guarda el interval repetitivo de las rondas
+    private _logical: boolean;                      // Si el reloj es logico
+    private _logicalClock: LogicalClock;            // Reloj logico
 
     /**
      * Constructor del componente
      * @param process proceso al que pertenece
      */
-    constructor(process: Process, n: number, f: number) {
+    constructor(process: Process, n: number, f: number, logical: boolean) {
         this._process = process;
         this._nextBall = {};
         this._peers = [];
         this.TTL = n;
         this.K = n - f;
+        this._logical = logical;
+        this._logicalClock = new LogicalClock();
     }
 
     /**
@@ -47,7 +52,11 @@ export default class DisseminationComponent {
      * @param event evento a enviar
      */
     public epToBroadcast(event: Event): void {
-        event.ts = Clock.getTime();
+        if(this._logical) {
+            event.ts = this._logicalClock.getTime();
+        } else {
+            event.ts = Clock.getTime();
+        }
         event.ttl = 0;
         event.sourceId = this._process.id;
         this._nextBall[event.id] = event;
@@ -76,7 +85,11 @@ export default class DisseminationComponent {
                     this._nextBall[event.id] = event;
                 }
             }
-            // updateClock(event.ts) Solo si se usa relojes logicos
+
+            // Update clock
+            if(this._logical) {
+                this._logicalClock.updateClock(event.ts);
+            }
         });
     }
 

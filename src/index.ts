@@ -15,6 +15,7 @@ var localClients: Client[] = [];            // Array de clientes
 var messageInterval: NodeJS.Timeout;        // Interval de NodeJS para el envio de mensajes continuado
 var nextMessage: number = 0;                // Siguiente id autoincremental de mensaje
 var manual: boolean = false;
+var logical: boolean = false;
 
 if(!fs.existsSync("network.json")) {
     console.log("La configuracion de red (network.json) no existe!");
@@ -67,7 +68,7 @@ async function startLocalClients(): Promise<void[]> {
     const nodeName: string = localNetwork["nodeName"];
 
     for(var i = 1; i <= n; i++) {
-        var client: Client = new Client('n-' + nodeName + '-client' + i, '0.0.0.0', initialPort + i, N, F);
+        var client: Client = new Client('n-' + nodeName + '-client' + i, '0.0.0.0', initialPort + i, N, F, logical);
         clientPromises.push(client.init());
         console.log("Preparado cliente " + client.id);
         localClients.push(client);
